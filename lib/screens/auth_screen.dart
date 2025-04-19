@@ -1,4 +1,3 @@
-// lib/screens/auth_screen.dart
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -126,30 +125,29 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       ),
       prefixIcon: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Icon(prefixIcon, color: iconColor, size: 20),
+        child: Icon(prefixIcon, color: iconColor, size: 22),
       ),
       prefixIconConstraints: const BoxConstraints(minWidth: 20, minHeight: 20),
-      contentPadding:
-          const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+      contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
       filled: true,
-      fillColor: Colors.black.withOpacity(0.2),
+      fillColor: Colors.black.withOpacity(0.1),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(14.0),
         borderSide: BorderSide(color: borderColor),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(14.0),
         borderSide: BorderSide(color: focusColor, width: 2.0),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(14.0),
         borderSide: BorderSide(color: errorColor),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(14.0),
         borderSide: BorderSide(color: errorColor, width: 2.0),
       ),
-      errorStyle: TextStyle(color: errorColor.withOpacity(0.95), fontSize: 12),
+      errorStyle: TextStyle(color: errorColor.withOpacity(0.9), fontSize: 12),
     );
   }
 
@@ -182,37 +180,34 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         ),
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 450),
+            constraints: const BoxConstraints(maxWidth: 500),
             child: SingleChildScrollView(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 40),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.hub_outlined, size: 65, color: primaryColor)
-                      .animate()
-                      .fade()
-                      .scale(),
-                  const SizedBox(height: 15),
+                  const Icon(Icons.hub_outlined, size: 70, color: primaryColor)
+                      .animate().fadeIn().scale(),
+                  const SizedBox(height: 20),
                   Text(
                     'B2Y Carbon Login',
                     style: GoogleFonts.poppins(
-                      fontSize: 24,
+                      fontSize: 26,
                       fontWeight: FontWeight.bold,
                       color: textColor,
                     ),
-                  ).animate().fade().slideY(),
-                  const SizedBox(height: 45),
+                  ).animate().fadeIn().slideY(),
+                  const SizedBox(height: 50),
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(25.0),
                     child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                       child: Container(
-                        padding: const EdgeInsets.all(24.0),
+                        padding: const EdgeInsets.all(30.0),
                         decoration: BoxDecoration(
-                          color: cardBackgroundColor.withOpacity(0.8),
+                          color: cardBackgroundColor.withOpacity(0.85),
                           border: Border.all(color: cardBorderColor),
-                          borderRadius: BorderRadius.circular(20.0),
+                          borderRadius: BorderRadius.circular(25.0),
                         ),
                         child: Form(
                           key: _formKey,
@@ -222,7 +217,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                               Text(
                                 'Login',
                                 style: GoogleFonts.poppins(
-                                  fontSize: 20,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                   color: textColor,
                                 ),
@@ -246,7 +241,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                     (v == null || v.isEmpty || !v.contains('@'))
                                         ? 'Inválido'
                                         : null,
-                              ).animate().fadeIn(delay: 500.ms).moveX(),
+                              ).animate().fadeIn().slideY(),
                               const SizedBox(height: 20),
                               TextFormField(
                                 controller: _passwordController,
@@ -265,7 +260,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                 validator: (v) => (v == null || v.length < 6)
                                     ? 'Min 6 chars'
                                     : null,
-                              ).animate().fadeIn(delay: 600.ms).moveX(begin: 20),
+                              ).animate().fadeIn().slideY(),
                               const SizedBox(height: 40),
                               _isLoading
                                   ? const Padding(
@@ -285,34 +280,34 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                             const Size(double.infinity, 52),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(12.0),
+                                              BorderRadius.circular(15.0),
                                         ),
                                         textStyle: GoogleFonts.poppins(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold),
-                                        elevation: 6,
+                                        elevation: 8,
                                         shadowColor:
-                                            primaryColor.withOpacity(0.5),
+                                            primaryColor.withOpacity(0.6),
                                       ),
                                       onPressed: _submitLoginForm,
-                                    ).animate(delay: 700.ms).fade().scale(),
-                              const SizedBox(height: 20),
+                                    ).animate().fadeIn().scale(),
+                              const SizedBox(height: 10),
                               TextButton(
                                 onPressed: _goToRegisterFlow,
                                 child: Text(
-                                  'Criar uma conta',
+                                  'Criar conta',
                                   style: GoogleFonts.poppins(
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.w500,
+                                    color: textColor,
+                                    fontSize: 14,
                                   ),
                                 ),
-                              ).animate().fade(delay: 800.ms),
+                              ),
                             ],
                           ),
                         ),
                       ),
                     ),
-                  ).animate().fadeIn(delay: 100.ms).scaleXY(),
+                  ).animate().fadeIn().slideY(),
                 ],
               ),
             ),

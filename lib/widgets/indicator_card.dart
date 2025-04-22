@@ -1,92 +1,106 @@
-// lib/widgets/indicator_card.dart (Design Futurista)
+// lib/widgets/indicator_card.dart (Estilo Mockup - TAMANHO ORIGINAL INTERNO)
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import 'package:shimmer/shimmer.dart';
 
 class IndicatorCard extends StatelessWidget {
   final String title;
   final String value;
   final IconData icon;
-  final Color color; // Cor de destaque principal
+  final Color accentColor;
+  final bool isLoading;
+  final bool hasError;
 
   const IndicatorCard({
     super.key,
     required this.title,
     required this.value,
     required this.icon,
-    required this.color,
+    required this.accentColor,
+    this.isLoading = false,
+    this.hasError = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    // Cores baseadas no tema escuro, com ajustes
-    final cardBgColor = Colors.grey[900]!.withOpacity(0.5); // Fundo semi-transparente
-    final borderColor = color.withOpacity(0.6);
-    final iconBgColor = color.withOpacity(0.15);
-    final primaryTextColor = Colors.white.withOpacity(0.9);
-    final secondaryTextColor = Colors.white.withOpacity(0.6);
+    final cardBgColor = Colors.black.withOpacity(0.3);
+    final borderColor = accentColor.withOpacity(0.8);
+    final glowColor = accentColor.withOpacity(0.5);
+    final primaryTextColor = Colors.white.withOpacity(0.95);
+    final secondaryTextColor = Colors.white.withOpacity(0.7);
+    final errorColor = Colors.redAccent.withOpacity(0.8);
 
-    return Container(
-      constraints: const BoxConstraints(minHeight: 80), // Garante altura mínima
-      decoration: BoxDecoration(
-        color: cardBgColor,
-        borderRadius: BorderRadius.circular(16), // Mais arredondado
-        border: Border.all(color: borderColor, width: 1),
-        // Sombra interna sutil para profundidade
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 5, spreadRadius: -3), // Sombra interna escura
-          BoxShadow(color: color.withOpacity(0.2), blurRadius: 8, spreadRadius: 1, offset: const Offset(0, 2)), // Brilho externo
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12), // Padding interno
-        child: Row( // Layout horizontal: Ícone | Título/Valor
+    Widget content;
+
+    if (isLoading) {
+      content = Shimmer.fromColors(
+        baseColor: Colors.grey[800]!,
+        highlightColor: Colors.grey[700]!,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Ícone com fundo
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: iconBgColor,
-              child: Icon(icon, size: 20, color: color),
-            ),
-            const SizedBox(width: 12),
-            // Coluna para Título e Valor
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center, // Centraliza verticalmente
-                children: [
-                  Text(
-                    title.toUpperCase(),
-                    style: GoogleFonts.orbitron( // Fonte Tech
-                      textStyle: theme.textTheme.labelSmall?.copyWith(
-                        color: secondaryTextColor,
-                        letterSpacing: 1.0,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10, // Título menor
-                      )
-                    ),
-                    maxLines: 1, overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    value,
-                    style: GoogleFonts.rajdhani( // Fonte Tech/Display
-                      textStyle: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: primaryTextColor, // Valor mais claro
-                        letterSpacing: 0.5,
-                        fontSize: 19, // Valor um pouco maior
-                      )
-                    ),
-                    maxLines: 1, overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
+            Container( height: 24, width: 24, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4))),
+            const SizedBox(height: 8),
+            Container( height: 10, width: 60, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(2))),
+            const SizedBox(height: 6),
+            Container( height: 16, width: 40, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(2))),
           ],
         ),
+      );
+    } else {
+      content = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            hasError ? Icons.error_outline : icon,
+            size: 24,
+            color: hasError ? errorColor : accentColor,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            title.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: GoogleFonts.rajdhani(
+              fontSize: 11,
+              fontWeight: FontWeight.bold,
+              color: secondaryTextColor,
+              letterSpacing: 0.5,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 4),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: hasError? errorColor.withOpacity(0.8) : primaryTextColor,
+              ),
+              maxLines: 1,
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: cardBgColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+            color: hasError ? errorColor.withOpacity(0.5) : borderColor,
+            width: 1.5),
+        boxShadow: [
+          BoxShadow( color: hasError ? errorColor.withOpacity(0.3) : glowColor, blurRadius: 12, spreadRadius: 1, ),
+           BoxShadow( color: Colors.black.withOpacity(0.5), blurRadius: 4, spreadRadius: -2,),
+        ],
       ),
-    ).animate().fadeIn(duration: 350.ms, delay: 100.ms).slideX(begin: 0.1, curve: Curves.easeOutCubic); // Animação
+      child: Center(child: content),
+    );
   }
 }

@@ -20,25 +20,25 @@ class _AdBannerPlaceholderState extends State<AdBannerPlaceholder> {
       title: "Faça o test drive no novo BYD",
       subtitle: "Recarregue grátis em nossos eletropostos",
       icon: Icons.electric_car,
-      gradient: LinearGradient(colors: [Colors.blueAccent, Colors.lightBlueAccent]),
+      gradient: const LinearGradient(colors: [Colors.blueAccent, Colors.lightBlueAccent]),
     ),
     _buildAd(
       title: "Compense Carbono e Ganhe Recompensas!",
       subtitle: "A cada km verde, créditos na carteira",
       icon: Icons.eco_outlined,
-      gradient: LinearGradient(colors: [Colors.green, Colors.lightGreenAccent]),
+      gradient: const LinearGradient(colors: [Colors.green, Colors.lightGreenAccent]),
     ),
     _buildAd(
       title: "Seguro Automotivo Verde? Confira!",
       subtitle: "Proteção com impacto reduzido",
       icon: Icons.shield_outlined,
-      gradient: LinearGradient(colors: [Colors.purpleAccent, Colors.pinkAccent]),
+      gradient: const LinearGradient(colors: [Colors.purpleAccent, Colors.pinkAccent]),
     ),
     _buildAd(
       title: "Postos parceiros com desconto!",
       subtitle: "Economize ao rodar limpo",
       icon: Icons.local_gas_station,
-      gradient: LinearGradient(colors: [Colors.orange, Colors.deepOrangeAccent]),
+      gradient: const LinearGradient(colors: [Colors.orange, Colors.deepOrangeAccent]),
     ),
   ];
 

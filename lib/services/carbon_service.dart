@@ -29,9 +29,9 @@ class CarbonService {
 
   static double _calculateAverageBaseline() {
     // Emissão por KM para cada tipo
-    final double gasKm = (_kgCO2e_per_Liter_GasolineUser / _km_per_Liter_GasolineC);   // ~0.1896
-    final double ethKm = (_kgCO2e_per_Liter_EthanolUser / _km_per_Liter_Ethanol);   // ~0.1153
-    final double dslKm = (_kgCO2e_per_Liter_DieselUser / _km_per_Liter_DieselS10);  // ~0.1523
+    const double gasKm = (_kgCO2e_per_Liter_GasolineUser / _km_per_Liter_GasolineC);   // ~0.1896
+    const double ethKm = (_kgCO2e_per_Liter_EthanolUser / _km_per_Liter_Ethanol);   // ~0.1153
+    const double dslKm = (_kgCO2e_per_Liter_DieselUser / _km_per_Liter_DieselS10);  // ~0.1523
     // Média simples dos tipos a combustão
     return (gasKm + ethKm + dslKm) / 3.0; // ~0.1524 kg CO2e / km
   }
